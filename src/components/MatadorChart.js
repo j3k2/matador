@@ -2,24 +2,17 @@ import React from 'react';
 import request from 'superagent';
 import { ResponsiveLine } from '@nivo/line'
 import { format, sub } from 'date-fns'
+import MatadorSearch from './MatadorSearch';
 
 export default class MatadorChart extends React.Component {
   state = {
-    data: [],
-    symbol: ''
+    data: []
   }
 
-  setSymbol = (event) => {
-    this.setState({
-      symbol: event.target.value
-    })
-  }
-
-  getData = (event) => {
-    event.preventDefault();
+  getDataForSymbol = (symbol) => {
     const end = format(new Date(), 'yyyy-MM-dd');
     const start = format(sub(new Date(), { months: 1 }), 'yyyy-MM-dd');
-    request.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.state.symbol}?from=${start}&to=${end}`)
+    request.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?from=${start}&to=${end}`)
       .then((res) => {
         if (res.body.historical) {
           const data = res.body.historical.map((obj) => {
@@ -42,10 +35,8 @@ export default class MatadorChart extends React.Component {
   }
 
   render() {
-    return <div style={{ height: 600 }}>
-      <form onSubmit={this.getData}>
-        <input type='text' value={this.state.symbol} onChange={this.setSymbol}></input>
-      </form>
+    return <div style={{ height: 480 }}>
+      <MatadorSearch getDataForSymbol={this.getDataForSymbol}/>
       <ResponsiveLine
         data={this.state.data}
         margin={{ top: 50, right: 100, bottom: 50, left: 50 }}

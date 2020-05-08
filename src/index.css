@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.search{
+  padding: 5px;
+  width: 188px;
+  z-index: 1;
+}
+
+.header{
+  width: 100%;
+  height: 45px;
+  background: indigo;
+  display: flex;
+  justify-content: left;
+}
+
+.search--results{
+  text-align: left;
+}
+
+.search--result{  
+  background: white;
+  padding: 5px;
+  width: 356px;
+  height: 36px;
+  border: solid 1px black;
+  overflow: hidden;
+  cursor: default;
+}
+
+.search--result-pending{
+  background: grey;
+}
